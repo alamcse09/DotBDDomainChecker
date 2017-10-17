@@ -16,29 +16,22 @@ public class CheckAvailability extends HttpServlet {
 
 	public void doGet( HttpServletRequest request, HttpServletResponse response ) throws IOException {
 		
-		boolean loggedIn = Login.login();
-		
 		String domain = request.getParameter( "domainName" );
 		
-		if( loggedIn ) {
+		if( isAvailable( domain ) ) {
 			
-			if( isAvailable( domain ) ) {
-				
-				response.getWriter().write( "available" );
-			}
-			else {
-				
-				response.getWriter().write( "Not available" );
-			}
+			response.getWriter().write( "available" );
 		}
 		else {
 			
-			response.getWriter().write( "Couldn't log in, try again later" );
+			response.getWriter().write( "Not available" );
 		}
 		
 	}
 	
 	private boolean isAvailable(String domain) throws IOException {
+		
+		SecurityFactory.reloadSecurityDetails();
 		
 		Response btclResponse = Jsoup.connect( 
 				Configuration.getHost() 

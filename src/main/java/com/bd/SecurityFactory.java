@@ -15,28 +15,13 @@ public class SecurityFactory {
 	
 	public static String getSessionID() throws IOException {
 		
-		if( session.length() != 0 ) {
-			
-			return session;
-		}else {
-			
-			reloadSecurityDetails();
-			return session;
-		}
+		return session;
 	}
 	
 	public static String getCSRF() throws IOException {
 		
-		if( csrf.length() != 0 ) {
-			
-			return csrf;
-		}else {
-			
-			reloadSecurityDetails();
-			return csrf;
-		}
+		return csrf;
 	}
-	
 	
 	public static String forceGetCSRF() throws IOException {
 		
@@ -52,7 +37,7 @@ public class SecurityFactory {
 	
 	public static void reloadSecurityDetails() throws IOException {
 		
-		Response res = Jsoup.connect( Configuration.getHost() + "/Login.do" ).method( Method.GET).timeout(10000).execute();
+		Response res = Jsoup.connect( Configuration.getHost() + "/domain/search" ).method( Method.GET).timeout(10000).execute();
 		Document doc = Jsoup.parse( res.body() );
 		
 		session = res.cookie( "JSESSIONID" );
