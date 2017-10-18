@@ -7,14 +7,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.jsoup.Jsoup;
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.jsoup.Connection.Method;
 import org.jsoup.Connection.Response;
 
 public class CheckAvailability extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
-
+	
 	public void doGet( HttpServletRequest request, HttpServletResponse response ) throws IOException {
+		
+		System.out.println( AuthenticationService.getInstance().authenticate( StringEscapeUtils.escapeJava( "sdfsadf@sadfsa.asdf" ), "adf" ) );
 		
 		String domain = request.getParameter( "domainName" );
 		
@@ -35,7 +38,7 @@ public class CheckAvailability extends HttpServlet {
 		
 		Response btclResponse = Jsoup.connect( 
 				Configuration.getHost() 
-				+ "/DomainAction.do?"
+				+ "/DomainChecker.do?"
 				+ "domainName="
 				+ domain 
 				+ "&columnID="
@@ -51,6 +54,6 @@ public class CheckAvailability extends HttpServlet {
 				.timeout( 100000 )
 				.execute();
 		
-		return btclResponse.body().contains("Congratulations! This domain is available to buy.");
+		return btclResponse.body().contains( "domain is available." );
 	}
 }
