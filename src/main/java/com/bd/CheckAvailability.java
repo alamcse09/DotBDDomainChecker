@@ -7,7 +7,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.jsoup.Jsoup;
-import org.apache.commons.lang3.StringEscapeUtils;
 import org.jsoup.Connection.Method;
 import org.jsoup.Connection.Response;
 
@@ -16,8 +15,6 @@ public class CheckAvailability extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	public void doGet( HttpServletRequest request, HttpServletResponse response ) throws IOException {
-		
-		System.out.println( AuthenticationService.getInstance().authenticate( StringEscapeUtils.escapeJava( "sdfsadf@sadfsa.asdf" ), "adf" ) );
 		
 		String domain = request.getParameter( "domainName" );
 		
